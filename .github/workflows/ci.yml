@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  python-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compile Python files
+        run: |
+          python -m compileall examples apps
+
+      - name: Check required docs
+        run: |
+          test -f README.md
+          test -f 学习路线.md
+          test -f 新手入门指南.md
+          test -f 完整课程/README.md
+          test -f apps/README.md
+          test -f docs/精品化路线.md
+
